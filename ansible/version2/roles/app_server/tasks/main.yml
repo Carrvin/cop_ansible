@@ -1,0 +1,19 @@
+---
+- name: Install Nginx
+  become: true
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Copy Web Page
+  become: true
+  ansible.builtin.template:
+    src: ./../templates/index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'
+
+- name: Start Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

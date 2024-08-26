@@ -1,0 +1,28 @@
+---
+################################################################
+################## Step 0: Prepare all hosts ###################
+################################################################
+- name: Prepare All Servers
+  hosts: all
+  become: true
+  vars:
+    ag_motd_sysadmins_email: pawin@posteo.de
+  roles:
+    - adriagalin.motd
+
+################################################################
+################ Step 1: Set up the app servers ################
+################################################################
+- name: Configure App Servers
+  hosts: app_servers_*
+  roles:
+    - app_server
+
+################################################################
+############### Step 2: Set up the load balancer ###############
+################################################################
+
+- name: Configure Load Balancer Servers
+  hosts: lb_servers
+  roles:
+    - lb_server

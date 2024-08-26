@@ -1,0 +1,7 @@
+---
+- name: Reload HAProxy Config
+  become: true
+  ansible.builtin.service:
+    name: haproxy
+    state: reloaded
+    enabled: true

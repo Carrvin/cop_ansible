@@ -1,0 +1,33 @@
+---
+lb_servers:
+  hosts:
+    cop_lb1:
+      ansible_host: cop-lb.pwdev.cloud
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./../../ssh/rsa_cop
+
+app_servers_green:
+  vars:
+    app_version: v1
+  hosts:
+    cop_app1_green:
+      ansible_host: cop-app1-green.pwdev.cloud
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./../../ssh/rsa_cop
+    cop_app2_green:
+      ansible_host: cop-app2-green.pwdev.cloud
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./../../ssh/rsa_cop
+
+app_servers_blue:
+  vars:
+    app_version: v1
+  hosts:
+    cop_app1_blue:
+      ansible_host: cop-app1-blue.pwdev.cloud
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./../../ssh/rsa_cop
+    cop_app2_blue:
+      ansible_host: cop-app2-blue.pwdev.cloud
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./../../ssh/rsa_cop

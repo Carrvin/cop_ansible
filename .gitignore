@@ -1,0 +1,8 @@
+ssh/*
+!ssh/.gitkeep
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+
+live-coding

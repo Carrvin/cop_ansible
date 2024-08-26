@@ -1,0 +1,61 @@
+---
+################################################################
+####### Step 1: Set up the app servers (green and blue) ########
+################################################################
+
+- name: Configure App Servers
+  hosts: app_servers_*
+  tasks:
+    - name: Install Nginx
+      become: true
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Copy Web Page
+      become: true
+      ansible.builtin.template:
+        src: ./templates/index.html.j2
+        dest: /var/www/html/index.html
+        mode: '0644'
+
+    - name: Start Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+################################################################
+############### Step 2: Set up the load balancer ###############
+################################################################
+
+- name: Configure Load Balancer Servers
+  hosts: lb_servers
+  tasks:
+    - name: Install HAProxy
+      become: true
+      ansible.builtin.package:
+        name: haproxy
+        state: present
+
+    - name: Configure HAProxy
+      become: true
+      ansible.builtin.copy:
+        src: ./files/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+        mode: preserve
+      notify: Reload HAProxy Config
+
+    - name: Start HAProxy config
+      ansible.builtin.service:
+        name: haproxy
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Reload HAProxy Config
+      become: true
+      ansible.builtin.service:
+        name: haproxy
+        state: reloaded
+        enabled: true
